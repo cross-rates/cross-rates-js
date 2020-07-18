@@ -96,14 +96,8 @@ class Rates {
         if (currencyNumCode === outputCurrencyNumCode) {
             return amount
         }
-        const transformCurrencyToUAH = (amount, currencyNumCode) => {
-            if (currencyNumCode === uahNumCode) {
-                return amount;
-            }
-            const rateCross = this.findFiatRate(currencyNumCode, uahNumCode);
-            return amount * rateCross;
-        }
-        const amountInUah = transformCurrencyToUAH(amount, currencyNumCode);
+        const amountInUah = (currencyNumCode === uahNumCode)
+            ? amount : amount * this.findFiatRate(currencyNumCode, uahNumCode);
 
         if (outputCurrencyNumCode === uahNumCode) {
             return amountInUah
