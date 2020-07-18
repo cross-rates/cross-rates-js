@@ -1,0 +1,33 @@
+name: publish npm package
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: '12.x'
+          registry-url: 'https://registry.npmjs.org'
+      - run: npm ci
+      - run: npm link
+      - run: npm link cross-rates
+      - run: npm run test
+      - run: npm unlink cross-rates
+      - run: npm unlink
+      - run: git config --global user.email "$GITHUB_ACTOR@users.noreply.github.com" && git config --global user.name "$GITHUB_ACTOR"
+      - run: npm version patch --force
+      - run: git push --tags && git push
+      - run: npm publish --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
+      - uses: actions/upload-artifact@v2
+        if: failure()
+        with:
+          name: error-logs
+          path: /home/runner/.npm/_logs

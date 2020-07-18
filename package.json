@@ -1,0 +1,41 @@
+{
+  "name": "cross-rates",
+  "version": "0.0.0",
+  "description": "Any currency (cryptocurrencies too) rates and transformation",
+  "main": "./src/index.js",
+  "scripts": {
+    "test": "jest --detectOpenHandles"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cross-rates/cross-rates-js.git"
+  },
+  "keywords": [
+    "crypto",
+    "currency",
+    "cryptocurrency",
+    "currencies",
+    "rates",
+    "blockchain",
+    "fiat currency"
+  ],
+  "author": "Serhii Maksymchuk",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/cross-rates/cross-rates-js/issues"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
+  "homepage": "https://github.com/cross-rates/cross-rates-js#readme",
+  "dependencies": {
+    "axios": "^0.19.2"
+  },
+  "devDependencies": {
+    "@jest/globals": "^26.1.0",
+    "jest": "^26.1.0",
+    "babel-jest": "^26.1.0",
+    "@babel/core": "^7.10.5",
+    "@babel/preset-env": "^7.10.4"
+  }
+}
