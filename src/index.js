@@ -293,6 +293,6 @@ class Rates {
 const rates = new Rates(() => InMemoryRepository.builder());
 export default rates;
 
-export function ratesWithStorage(storage) {
-    return new Rates(() => storage)
+export function ratesWithStorage(storageSupplier) {
+    return new Rates(storageSupplier)
 }
