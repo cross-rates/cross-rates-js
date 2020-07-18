@@ -1,13 +1,13 @@
 export class InMemoryRepository {
 
-    name;
-    nullObject;
-    nullObjectSupplier;
-    subscribers = [];
-    storage = {};
-
     static builder() {
         return new Builder()
+    }
+
+
+    constructor() {
+        this.subscribers = [];
+        this.storage = {};
     }
 
     getLatest() {

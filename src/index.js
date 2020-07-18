@@ -38,10 +38,6 @@ function compareStrings(a, b) {
 }
 
 class Rates {
-    fiatRatesRepository;
-    cryptoRatesRepository;
-    cryptoCurrenciesRepository;
-
     typeToTransformer = {
         [fiatCurrencyTypeName + fiatCurrencyTypeName]: this.transformFiatToFiat,
         [fiatCurrencyTypeName + cryptoCurrencyTypeName]: this.transformFiatToCrypto,
