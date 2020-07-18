@@ -1,10 +1,7 @@
 .github
 .idea
-src
 test
-cross-rates-browser.iml
 .babelrc
-webpack.config.js
-webpack.dev.config.js
-webpack.prod.config.js
 index.js
+cross-rates-js.iml
+jest.config.js
