@@ -1,3 +1,10 @@
+name: publish npm package
+
+on:
+  push:
+    branches:
+      - master
+
 jobs:
   publish-npm-module:
     runs-on: ubuntu-latest
