@@ -166,7 +166,13 @@ class Rates {
     }
 
     isFiat(currencyStrCode) {
-        return !!this.getFiatCurrencies().indexOf(currencyStrCode.toUpperCase()) >= 0;
+        return this.fiatRatesRepository.getLatest().reduce((result, rate) => {
+            const currencyA = currencies.getByNumCode(rate.currencyCodeA);
+            result[currencyA.code] = currencyA;
+            const currencyB = currencies.getByNumCode(rate.currencyCodeB);
+            result[currencyB.code] = currencyB;
+            return result
+        }, {})[currencyStrCode.toUpperCase()];
     }
 
     getCurrencyType(currency) {
@@ -222,65 +228,61 @@ class Rates {
             .sort((a, b) => compareStrings(a.code, b.code))
     }
 
-    refreshRates() {
-        let savedRates = null;
-        let savedCryptoRates = null;
+    fetchLatestFiatRates() {
+        return monobankApiClient.getRates(
+            fiatRates => {
+                if (fiatRates
+                    && !fiatRates.errorDescription
+                    && fiatRates.length
+                ) {
+                    if (fiatRates !== savedRates) {
+                        this.fiatRatesRepository.save(fiatRates);
+                    }
+                } else {
+                    throw fiatRates
+                }
+            },
+            console.error
+        );
+    }
 
-        const fetchLatestFiatRates = () => {
-            monobankApiClient.getRates(
-                fiatRates => {
-                    if (fiatRates
-                        && !fiatRates.errorDescription
-                        && fiatRates.length
-                    ) {
-                        if (fiatRates !== savedRates) {
-                            this.fiatRatesRepository.save(fiatRates);
-                            savedRates = fiatRates;
-                        }
-                    } else {
-                        throw fiatRates
-                    }
-                },
-                console.error
-            );
-        };
-        const fetchCryptoCurrencies = () => {
-            binanceApiClient.fetchCryptoCurrencies(
-                response => {
-                    let symbols = response.data.symbols;
-                    if (symbols) {
-                        this.cryptoCurrenciesRepository.save(Object.keys(symbols
-                            .sort((a, b) => compareStrings(a.symbol, b.symbol))
-                            .reduce((result, symbol) => {
-                                result[symbol.baseAsset] = true;
-                                result[symbol.quoteAsset] = true;
-                                return result
-                            }, {})));
-                    } else {
-                        throw response
-                    }
-                },
-                console.error
-            )
-        };
-        const fetchLatestCryptoCurrenciesRates = () => {
-            binanceApiClient.fetchLatestCryptoCurrenciesRates(
-                response => {
-                    let cryptoRates = response.data;
-                    if (!cryptoRates) {
-                        throw response
-                    }
-                    if (cryptoRates !== savedCryptoRates) {
-                        this.cryptoRatesRepository.save(cryptoRates);
-                        savedCryptoRates = cryptoRates;
-                    }
-                },
-                console.error
-            );
-        };
-        fetchLatestFiatRates();
-        fetchCryptoCurrencies();
-        fetchLatestCryptoCurrenciesRates();
+    fetchCryptoCurrencies() {
+        return binanceApiClient.fetchCryptoCurrencies(
+            response => {
+                let symbols = response.data.symbols;
+                if (symbols) {
+                    this.cryptoCurrenciesRepository.save(Object.keys(symbols
+                        .sort((a, b) => compareStrings(a.symbol, b.symbol))
+                        .reduce((result, symbol) => {
+                            result[symbol.baseAsset] = true;
+                            result[symbol.quoteAsset] = true;
+                            return result
+                        }, {})));
+                } else {
+                    throw response
+                }
+            },
+            console.error
+        )
+    }
+
+    fetchLatestCryptoCurrenciesRates() {
+        return binanceApiClient.fetchLatestCryptoCurrenciesRates(
+            response => {
+                let cryptoRates = response.data;
+                if (!cryptoRates) {
+                    throw response
+                }
+                this.cryptoRatesRepository.save(cryptoRates);
+            },
+            console.error
+        );
+    }
+
+    refreshRates() {
+        this.fetchLatestFiatRates();
+        this.fetchCryptoCurrencies();
+        this.fetchLatestCryptoCurrenciesRates();
     }
 }
 

@@ -4,7 +4,7 @@ const baseUrl = "https://api.monobank.ua";
 
 export const monobankApiClient = {
     getRates(ratesConsumer, onError) {
-        axios.get(baseUrl + "/bank/currency")
+        return axios.get(baseUrl + "/bank/currency")
             .then(response => {
                 if (response
                     && (response.status === 200)
