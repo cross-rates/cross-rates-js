@@ -45,6 +45,7 @@ jobs:
           registry-url: 'https://registry.npmjs.org'
       # sleep so monobank api will not fail with "too many requests" after main tests
       - run: |
+          git pull --rebase
           cd ./cross-rates-browser
           sleep 59
           npm install
@@ -57,7 +58,6 @@ jobs:
           git config --global user.email "$GITHUB_ACTOR@users.noreply.github.com" && git config --global user.name "$GITHUB_ACTOR"
           npm version patch --force
           cd ../
-          git pull --rebase
           git push
           cd ./cross-rates-browser
           npm publish --access public
@@ -68,5 +68,8 @@ jobs:
         with:
           name: error-logs
           path: /home/runner/.npm/_logs
+
+
+
 
 
