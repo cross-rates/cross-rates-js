@@ -47,7 +47,7 @@ jobs:
       - run: |
           cd ./cross-rates-browser
           sleep 50
-          npm ci
+          npm install
           npm run build
           npm link
           npm link cross-rates-browser
