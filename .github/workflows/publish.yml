@@ -34,7 +34,7 @@ jobs:
 
           npm version patch --force
           cd ../
-          git commit -m
+          git commit -m 'Browser client version updated'
           git push
           cd ./cross-rates-browser
           npm publish --access public
