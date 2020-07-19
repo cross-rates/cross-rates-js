@@ -31,7 +31,6 @@ jobs:
           npm run test
           npm unlink cross-rates-browser
           npm unlink
-
           npm version patch --force
           cd ../
           git add ./cross-rates-browser/
