@@ -41,10 +41,10 @@ class Rates {
 
     constructor(storageFactory) {
         this.typeToTransformer = {
-            [fiatCurrencyTypeName + fiatCurrencyTypeName]: this.transformFiatToFiat,
-            [fiatCurrencyTypeName + cryptoCurrencyTypeName]: this.transformFiatToCrypto,
-            [cryptoCurrencyTypeName + fiatCurrencyTypeName]: this.transformCryptoToFiat,
-            [cryptoCurrencyTypeName + cryptoCurrencyTypeName]: this.transformCryptoToCrypto,
+            [fiatCurrencyTypeName + fiatCurrencyTypeName]: this.transformFiatToFiat.bind(this),
+            [fiatCurrencyTypeName + cryptoCurrencyTypeName]: this.transformFiatToCrypto.bind(this),
+            [cryptoCurrencyTypeName + fiatCurrencyTypeName]: this.transformCryptoToFiat.bind(this),
+            [cryptoCurrencyTypeName + cryptoCurrencyTypeName]: this.transformCryptoToCrypto.bind(this),
         };
         this.fiatRatesRepository = storageFactory().name('fiat-rates').nullObject([]).build();
         this.cryptoRatesRepository = storageFactory().name('crypto-rates').nullObject([]).build();
