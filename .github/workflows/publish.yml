@@ -58,6 +58,7 @@ jobs:
           npm unlink
           npm version patch --force
           cd ../
+          git add .
           git push
           cd ./cross-rates-browser
           npm publish --access public
