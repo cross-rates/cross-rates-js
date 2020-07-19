@@ -1,5 +1,6 @@
-.github
 .idea
+.github
+cross-rates-browser
 test
 .babelrc
 cross-rates-js.iml

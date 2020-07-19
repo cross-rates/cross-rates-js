@@ -6,7 +6,7 @@ on:
       - master
 
 jobs:
-  build:
+  publish npm module:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -24,6 +24,38 @@ jobs:
       - run: npm version patch --force
       - run: git push --tags && git push
       - run: npm publish --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
+      - uses: actions/upload-artifact@v2
+        if: failure()
+        with:
+          name: error-logs
+          path: /home/runner/.npm/_logs
+
+  publish browser client:
+    needs: publish npm module
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: '12.x'
+          registry-url: 'https://registry.npmjs.org'
+      - run: |
+          cd ./cross-rates-browser
+          npm ci
+          npm run build
+          npm link
+          npm link cross-rates-browser
+          npm run test
+          npm unlink cross-rates-browser
+          npm unlink
+          git config --global user.email "$GITHUB_ACTOR@users.noreply.github.com" && git config --global user.name "$GITHUB_ACTOR"
+          npm version patch --force
+          cd ../
+          git push --tags && git push
+          cd ./cross-rates-browser
+          npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
       - uses: actions/upload-artifact@v2
