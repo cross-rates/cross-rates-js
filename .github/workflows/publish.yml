@@ -20,8 +20,6 @@ jobs:
       # sleep so monobank api will not fail with "too many requests" after main tests
       - run: sleep 60
       - run: npm run test
-      - run: npm unlink cross-rates
-      - run: npm unlink
       - run: |
           cd ./cross-rates-browser
           sleep 60
@@ -33,6 +31,8 @@ jobs:
           npm unlink cross-rates-browser
           npm unlink
           cd ../
+      - run: npm unlink cross-rates
+      - run: npm unlink
 
       - run: git config --global user.email "$GITHUB_ACTOR@users.noreply.github.com" && git config --global user.name "$GITHUB_ACTOR"
       - run: npm version patch --force
