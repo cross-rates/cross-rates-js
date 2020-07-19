@@ -27,24 +27,32 @@ jobs:
       - run: npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
-      - run: |
-          cd ./cross-rates-browser
-          sleep 60
-          npm install
-          npm run build
-          npm link
-          npm link cross-rates-browser
-          npm run test
-          npm unlink cross-rates-browser
-          npm unlink
-          npm version patch --force
-          cd ../
-          git add ./cross-rates-browser/
-          git commit -m 'Browser client version updated'
-          git push
-          cd ./cross-rates-browser
-          npm publish --access public
-          cd ../
+  publish-browser-client:
+    needs: publish-npm-module
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: '12.x'
+          registry-url: 'https://registry.npmjs.org'
+      - run: cd ./cross-rates-browser
+      - run: sleep 60
+      - run: npm install
+      - run: npm run build
+      - run: npm link
+      - run: npm link cross-rates-browser
+      - run: npm run test
+      - run: npm unlink cross-rates-browser
+      - run: npm unlink
+      - run: npm version patch --force
+      - run: cd ../
+      - run: git add ./cross-rates-browser/
+      - run: git commit -m 'Browser client version updated'
+      - run: git push
+      - run: cd ./cross-rates-browser
+      - run: npm publish --access public
+      - run: cd ../
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
       - uses: actions/upload-artifact@v2
