@@ -3,6 +3,7 @@
 ![Version](https://img.shields.io/npm/v/cross-rates?color=blue)
 ![](https://img.shields.io/bundlephobia/minzip/cross-rates)
 ![](https://img.shields.io/bundlephobia/min/cross-rates)
+![](https://img.shields.io/david/cross-rates/cross-rates-js)
 ![JS Client downloads](https://img.shields.io/npm/dw/cross-rates)
 ![Browser Client downloads](https://img.shields.io/npm/dw/cross-rates-browser)
 # cross-rates-js
