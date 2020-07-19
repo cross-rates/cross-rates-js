@@ -240,7 +240,11 @@ class Rates {
                     throw fiatRates
                 }
             },
-            console.error
+            e => {
+                console.error(e);
+                console.warn("Will refetch rates after 10s")
+                setTimeout(() => this.fetchLatestFiatRates(), 10 * 1000)
+            }
         );
     }
 
