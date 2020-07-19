@@ -17,6 +17,8 @@ jobs:
       - run: npm ci
       - run: npm link
       - run: npm link cross-rates
+      # sleep 50 seconds so monobank api will not fail with "too many requests" after main tests
+      - run: sleep 50
       - run: npm run test
       - run: npm unlink cross-rates
       - run: npm unlink
