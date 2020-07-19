@@ -6,7 +6,7 @@ on:
       - master
 
 jobs:
-  publish npm module:
+  publish-npm-module:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -32,8 +32,8 @@ jobs:
           name: error-logs
           path: /home/runner/.npm/_logs
 
-  publish browser client:
-    needs: publish npm module
+  publish-browser-client:
+    needs: publish-npm-module
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
