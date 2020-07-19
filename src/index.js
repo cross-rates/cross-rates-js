@@ -235,9 +235,7 @@ class Rates {
                     && !fiatRates.errorDescription
                     && fiatRates.length
                 ) {
-                    if (fiatRates !== savedRates) {
-                        this.fiatRatesRepository.save(fiatRates);
-                    }
+                    this.fiatRatesRepository.save(fiatRates);
                 } else {
                     throw fiatRates
                 }
