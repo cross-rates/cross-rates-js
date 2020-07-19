@@ -53,6 +53,7 @@ jobs:
           npm unlink cross-rates-browser
           npm unlink
           cd ../
+      - run: git config --global user.email "$GITHUB_ACTOR@users.noreply.github.com" && git config --global user.name "$GITHUB_ACTOR"
       - run: |
           cd ./cross-rates-browser
           npm version patch --force
