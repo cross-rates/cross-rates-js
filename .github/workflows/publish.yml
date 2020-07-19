@@ -22,31 +22,7 @@ jobs:
       - run: npm run test || npm run test
       - run: npm unlink cross-rates
       - run: npm unlink
-      - run: git config --global user.email "$GITHUB_ACTOR@users.noreply.github.com" && git config --global user.name "$GITHUB_ACTOR"
-      - run: npm version patch --force
-      - run: git push --tags && git push
-      - run: npm publish --access public
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
-      - uses: actions/upload-artifact@v2
-        if: failure()
-        with:
-          name: error-logs
-          path: /home/runner/.npm/_logs
-
-  publish-browser-client:
-    needs: publish-npm-module
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v1
-        with:
-          node-version: '12.x'
-          registry-url: 'https://registry.npmjs.org'
-      # sleep so monobank api will not fail with "too many requests" after main tests
       - run: |
-          git config --global user.email "$GITHUB_ACTOR@users.noreply.github.com" && git config --global user.name "$GITHUB_ACTOR"
-          git pull --rebase
           cd ./cross-rates-browser
           sleep 60
           npm install
@@ -56,12 +32,21 @@ jobs:
           npm run test || npm run test
           npm unlink cross-rates-browser
           npm unlink
+          cd ../
+
+      - run: git config --global user.email "$GITHUB_ACTOR@users.noreply.github.com" && git config --global user.name "$GITHUB_ACTOR"
+      - run: npm version patch --force
+      - run: |
+          cd ./cross-rates-browser
           npm version patch --force
           cd ../
-          git add .
-          git push
+      - run: git push --tags && git push
+
+      - run: npm publish --access public
+      - run: |
           cd ./cross-rates-browser
           npm publish --access public
+          cd ../
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
       - uses: actions/upload-artifact@v2
