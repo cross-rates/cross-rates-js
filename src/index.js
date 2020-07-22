@@ -228,6 +228,18 @@ class Rates {
             .sort((a, b) => compareStrings(a.code, b.code))
     }
 
+    getAvailableCurrencies() {
+        const map = [].concat(this.getFiatCurrencies())
+            .concat(this.getCryptoCurrencies())
+            .reduce((previousValue, currentValue) => {
+                if (!previousValue[currentValue.code]) {
+                    previousValue[currentValue.code] = currentValue
+                }
+                return previousValue
+            }, {});
+        return Object.values(map).sort((a, b) => compareStrings(a.code, b.code));
+    }
+
     fetchLatestFiatRates() {
         return monobankApiClient.getRates(
             fiatRates => {
