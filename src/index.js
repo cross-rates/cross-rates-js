@@ -206,8 +206,19 @@ class Rates {
     }
 
     getCurrencyInfo(currencyCode) {
-        return currencies.getByStringCode(currencyCode)
-            || this.cryptoCurrenciesRepository.getLatest().find(c=>currencyCode === c)
+        const fiatCurrencyInfo = currencies.getByStringCode(currencyCode);
+        if (fiatCurrencyInfo) {
+            return fiatCurrencyInfo;
+        }
+        const cryptoCurrencyInfo = this.cryptoCurrenciesRepository.getLatest().find(c=>currencyCode === c);
+        if (cryptoCurrencyInfo) {
+            return {
+                crypto: true,
+                code: currencyCode,
+                afterDecimalPoint: 8,
+                name: currencyCode,
+            }
+        }
     }
 
     getCryptoCurrencies() {
