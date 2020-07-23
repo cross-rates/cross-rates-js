@@ -27,7 +27,7 @@ jobs:
           path: /home/runner/.npm/_logs
 
   test-browser-client:
-    needs: publish-npm-module
+    needs: test-npm-module
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
