@@ -205,6 +205,11 @@ class Rates {
         this.cryptoCurrenciesRepository.subscribeOnChange(consumer);
     }
 
+    getCurrencyInfo(currencyCode) {
+        return currencies.getByStringCode(currencyCode)
+            || this.cryptoCurrenciesRepository.getLatest().find(c=>currencyCode === c)
+    }
+
     getCryptoCurrencies() {
         return this.cryptoCurrenciesRepository.getLatest()
             .sort()
