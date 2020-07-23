@@ -9,7 +9,6 @@ test('correct checking on fiat currency codes', async () => {
         expect(rates.isFiat("UAH")).toBeTruthy();
         expect(rates.isFiat("BTC")).toBeFalsy();
         expect(rates.isFiat("USD")).toBeTruthy();
-        expect(rates.getCurrencyInfo("BNB")).toBeDefined()
         expect(rates.getCurrencyInfo("UAH")).toBeDefined()
     }, e => {
         throw e
