@@ -1,10 +1,10 @@
 import axios from "axios";
 
-const baseUrl = "https://api.monobank.ua";
+const baseUrl = "https://ntrocp887e.execute-api.eu-central-1.amazonaws.com/prod/monobank/currency";
 
 export const monobankApiClient = {
     getRates(ratesConsumer, onError) {
-        return axios.get(baseUrl + "/bank/currency")
+        return axios.get(baseUrl)
             .then(response => {
                 if (response
                     && (response.status === 200)
