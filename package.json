@@ -1,6 +1,6 @@
 {
   "name": "cross-rates",
-  "version": "0.1.24",
+  "version": "0.1.25",
   "description": "Any currency (cryptocurrencies too) rates and transformation",
   "main": "./src/index.js",
   "scripts": {
