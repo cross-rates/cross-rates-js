@@ -29,7 +29,7 @@
   },
   "homepage": "https://github.com/cross-rates/cross-rates-js#readme",
   "dependencies": {
-    "axios": "^0.19.2"
+    "axios": "^0.21.1"
   },
   "devDependencies": {
     "@jest/globals": "^26.1.0",
