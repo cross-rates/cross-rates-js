@@ -17,7 +17,6 @@ jobs:
       - run: npm ci
       - run: npm link
       - run: npm link cross-rates
-      # sleep so monobank api will not fail with "too many requests" after main tests
       - run: npm run test
       - run: npm unlink cross-rates
       - run: npm unlink
@@ -36,7 +35,7 @@ jobs:
         with:
           node-version: '12.x'
           registry-url: 'https://registry.npmjs.org'
-      - run: sleep 30
+      - run: sleep 60
       - run: |
           cd ./cross-rates-browser
           npm install
