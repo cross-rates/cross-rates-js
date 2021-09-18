@@ -28,7 +28,7 @@
   "homepage": "https://github.com/cross-rates/cross-rates-js#readme",
   "dependencies": {
     "axios": "^0.19.2",
-    "cross-rates": "^0.1.25"
+    "cross-rates": "^0.1.26"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
