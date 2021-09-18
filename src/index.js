@@ -55,9 +55,13 @@ class Rates {
 
     getCryptoPrice(left, right) {
         const cryptoRates = this.cryptoRatesRepository.getLatest();
-        let ticker = cryptoRates.filter(r => r.symbol === `${left}${right}`)[0] || {};
+        let market = `${left}${right}`;
+        let ticker = cryptoRates.filter(r => r.symbol === market)[0] || {};
         let price = +(ticker.price);
 
+        if (left === "DAI" || left === "TUSD") {
+            price = NaN;
+        }
         if (price && !isNaN(price)) {
             return price;
         }
