@@ -1,6 +1,7 @@
 import rates from "cross-rates";
 import {expect, test} from "@jest/globals";
 import {monobankApiClient} from "../src/components/monobankApiClient";
+import {binanceApiClient} from "../src/components/binanceApiClient";
 
 test('correct checking on fiat currency codes', async () => {
     await monobankApiClient.getRates(_ => {
@@ -13,5 +14,14 @@ test('correct checking on fiat currency codes', async () => {
     }, e => {
         throw e
     })
+});
+
+test('should transform DAI to UAH correctly', async () => {
+    await monobankApiClient.getRates(new Function(), new Function())
+    await binanceApiClient.fetchCryptoCurrencies(new Function(), new Function())
+    let result = rates.transform(950.54, "DAI", "BUSD");
+    expect(result).toBeDefined();
+    expect(result).toBeGreaterThan(0);
+    console.log("result", result)
 });
 
