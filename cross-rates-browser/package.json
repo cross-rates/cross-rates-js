@@ -1,6 +1,6 @@
 {
   "name": "cross-rates-browser",
-  "version": "0.1.28",
+  "version": "0.2.0",
   "description": "Any currency (cryptocurrencies too) rates and transformation",
   "main": "./dist/main.js",
   "scripts": {
@@ -28,7 +28,7 @@
   "homepage": "https://github.com/cross-rates/cross-rates-js#readme",
   "dependencies": {
     "axios": "^0.19.2",
-    "cross-rates": "^0.1.26"
+    "cross-rates": "^0.2.1"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
