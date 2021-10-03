@@ -299,6 +299,12 @@
     "afterDecimalPoint": 2,
     "name": "Eritrean nakfa"
   },
+  "ESA": {
+    "code": "ESA",
+    "numCode": "996",
+    "afterDecimalPoint": 2,
+    "name": "Bolivar Fuerte"
+  },
   "ETB": {
     "code": "ETB",
     "numCode": "230",
@@ -934,6 +940,12 @@
     "numCode": "860",
     "afterDecimalPoint": 2,
     "name": "Uzbekistan som"
+  },
+  "VEF": {
+    "code": "VEF",
+    "numCode": "937",
+    "afterDecimalPoint": 2,
+    "name": "Bolivar Fuerte"
   },
   "VES": {
     "code": "VES",
