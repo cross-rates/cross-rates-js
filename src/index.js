@@ -172,8 +172,12 @@ class Rates {
     isFiat(currencyStrCode) {
         return this.fiatRatesRepository.getLatest().reduce((result, rate) => {
             const currencyA = currencies.getByNumCode(rate.currencyCodeA);
-            result[currencyA.code] = currencyA;
             const currencyB = currencies.getByNumCode(rate.currencyCodeB);
+
+            if (!currencyA || !currencyB) {
+                return result
+            }
+            result[currencyA.code] = currencyA;
             result[currencyB.code] = currencyB;
             return result
         }, {})[currencyStrCode.toUpperCase()];
@@ -240,8 +244,12 @@ class Rates {
         return Object
             .values(this.fiatRatesRepository.getLatest().reduce((result, rate) => {
                 const currencyA = currencies.getByNumCode(rate.currencyCodeA);
-                result[currencyA.code] = currencyA;
                 const currencyB = currencies.getByNumCode(rate.currencyCodeB);
+
+                if (!currencyA || !currencyB) {
+                    return result
+                }
+                result[currencyA.code] = currencyA;
                 result[currencyB.code] = currencyB;
                 return result
             }, {}))
